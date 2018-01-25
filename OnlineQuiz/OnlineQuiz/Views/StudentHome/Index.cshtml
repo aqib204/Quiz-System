@@ -1,0 +1,48 @@
+﻿@model IEnumerable<OnlineQuiz.Models.UserQuizRecord>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("_Logout")
+
+
+<p style="float: right; font-size: 17px;">Username : <b style="color: cornflowerblue">@Session["Username"]</b></p>
+<br/>
+<p>@Html.ActionLink("Logout", "Logout")</p>
+<br />
+
+<h1 align="center">Student Panel</h1><hr/>
+
+@Html.ActionLink("Give another quiz", "ViewAllSubjects")<br/>
+
+<br/>
+<h3>Your Quizzes Result</h3>
+<table class="table">
+<tr>
+    <th>
+        @Html.DisplayNameFor(model => model.SubjectName)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.QuizDate)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.MarksObtained)
+    </th>
+    <th></th>
+</tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuizDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MarksObtained)
+        </td>
+    </tr>
+}
+</table>

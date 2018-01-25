@@ -1,0 +1,15 @@
+﻿@model OnlineQuiz.Models.UserQuizRecord
+
+
+@{
+    ViewBag.Title = "Result";
+}
+
+<h2>Result</h2>
+
+<p>Total Questions : 5</p>
+<p>Correct Answers : @ViewBag.correctAnswers</p>
+<p>Total Marks : 5</p>
+<br />
+@Html.ActionLink("Go to Subject Menu", "ViewAllSubjects")
+

@@ -1,0 +1,62 @@
+﻿@model OnlineQuiz.Models.Login
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<head>
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+    </style>
+</head>  
+
+<h2>Student Page</h2>
+
+<div id="login-div">
+    
+    @using (Html.BeginForm("Authorize", "Student"))
+    {
+        <table> 
+            <tr>
+                <td></td>
+            </tr>
+            
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Username)
+                </td>
+                <td>@Html.EditorFor(model => model.Username)</td>
+                <td>@Html.ValidationMessageFor(model => model.Username)</td>
+            </tr>
+            
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Password)
+                </td>
+                <td>@Html.EditorFor(model => model.Password)</td>
+                <td>@Html.ValidationMessageFor(model => model.Password)</td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" name="submit" value="Login"/>
+                </td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td>
+                    <label class="field-validation-error">@Html.DisplayFor(model => model.loginErrorMessage)</label>
+                </td>
+            </tr>
+        </table>
+    }
+
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

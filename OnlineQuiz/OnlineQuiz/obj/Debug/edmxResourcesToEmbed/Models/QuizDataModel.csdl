@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserQuizRecords" Relationship="Models.FK_Login_UserQuizRecord" FromRole="Login" ToRole="UserQuizRecord" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="SubjectID" Type="Int32" Nullable="false" />
+    <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Option1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Option2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CorrectOption" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK_Subject_Question" FromRole="Question" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="SubjectID" />
+    </Key>
+    <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubjectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Questions" Relationship="Self.FK_Subject_Question" FromRole="Subject" ToRole="Question" />
+  </EntityType>
+  <Association Name="FK_Subject_Question">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QuizContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Logins" EntityType="Self.Login" />
+    <EntitySet Name="Questions" EntityType="Self.Question" />
+    <EntitySet Name="Subjects" EntityType="Self.Subject" />
+    <AssociationSet Name="FK_Subject_Question" Association="Self.FK_Subject_Question">
+      <End Role="Subject" EntitySet="Subjects" />
+      <End Role="Question" EntitySet="Questions" />
+    </AssociationSet>
+    <EntitySet Name="UserQuizRecords" EntityType="Models.UserQuizRecord" />
+    <AssociationSet Name="FK_Login_UserQuizRecord" Association="Models.FK_Login_UserQuizRecord">
+      <End Role="Login" EntitySet="Logins" />
+      <End Role="UserQuizRecord" EntitySet="UserQuizRecords" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserQuizRecord">
+    <Key>
+      <PropertyRef Name="QuizID" />
+    </Key>
+    <Property Name="QuizID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SubjectName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QuizDate" Type="DateTime" Precision="0" />
+    <Property Name="MarksObtained" Type="Int32" />
+    <NavigationProperty Name="Login" Relationship="Models.FK_Login_UserQuizRecord" FromRole="UserQuizRecord" ToRole="Login" />
+  </EntityType>
+  <Association Name="FK_Login_UserQuizRecord">
+    <End Type="Models.Login" Role="Login" Multiplicity="1" />
+    <End Type="Models.UserQuizRecord" Role="UserQuizRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserQuizRecord">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<OnlineQuiz.Models.Question>
+
+@{
+    ViewBag.Title = "ViewAllQuestions";
+}
+
+<script type="text/javascript">
+    function submitResult() {
+        confirm("Are you sure you want to submit the result?");
+    }
+
+</script>
+
+<h1 align="center">Quiz</h1>
+
+@{
+    var li = new List<string> {"1", "2", "3", "4", "5"};
+    int count = 0;
+}
+
+@using (Html.BeginForm("Result", "StudentHome"))
+{
+    <ol>
+        @foreach (var item in Model)
+        {
+            Session["QID"+li[count]] = item.QuestionID;
+            <li>
+                @Html.HiddenFor(modelItem => item.QuestionID)
+                @Html.DisplayFor(modelItem => item.Question1)
+                <br/>
+                <br/>
+                @Html.RadioButton("option" + li[count], item.Option1) @item.Option1
+                <br/>
+                @Html.RadioButton("option" + li[count++], item.Option2) @item.Option2
+                <br/>
+            </li>
+            <hr/>
+        }
+    </ol>
+    <p align="center"><input type="submit" name="submit" value="Submit Quiz" class="btn btn-success" style="width:20%;"/></p>
+}

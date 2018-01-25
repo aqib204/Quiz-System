@@ -1,0 +1,29 @@
+﻿@model IEnumerable<OnlineQuiz.Models.Question>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+@{
+    var li = new List<string> { "1", "2", "3", "4", "5" };
+    int count = 0;
+}
+
+<ol>
+@foreach (var item in Model)
+{
+    <li>
+        @Html.HiddenFor(modelItem => item.QuestionID)
+        @Html.DisplayFor(modelItem => item.Question1)
+        <br/>
+        <br/>
+        @Html.RadioButton("option" + li[count], item.Option1) @item.Option1
+        <br/>
+        @Html.RadioButton("option" + li[count++], item.Option2) @item.Option2
+        <br/>
+    </li>
+}
+</ol>

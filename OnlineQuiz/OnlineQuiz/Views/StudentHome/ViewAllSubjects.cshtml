@@ -1,0 +1,18 @@
+﻿@model IEnumerable<OnlineQuiz.Models.Subject>
+
+@{
+    ViewBag.Title = "ViewAllSubjects";
+}
+
+@Html.ActionLink("Go to Main Page", "Index")
+
+<div class="container">
+    <br/>
+    <h4>Select Subject for Quiz</h4>
+    <hr/>
+    @foreach (var item in Model)
+    {
+        <p>@Html.ActionLink(item.SubjectName, "ViewAllQuestions", new {id = item.SubjectID})</p>
+    }
+
+</div>

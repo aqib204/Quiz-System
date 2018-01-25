@@ -1,0 +1,80 @@
+﻿@model IEnumerable<OnlineQuiz.Models.UserQuizRecord>
+
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/cupertino/jquery-ui.css" type="text/css" rel="Stylesheet" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: '@Url.Action("GetStudents")',
+            minLength: 1,
+            select : submitAutocompleteForm
+        });
+    });
+
+
+    var submitAutocompleteForm = function(event, ui) {
+        var $input = $(this);
+        $input.val(ui.item.label);
+
+        var $form = $input.parents("form:first");
+        $form.submit();
+    };
+
+</script>
+
+@Html.ActionLink("Go to Admin Panel", "Index")
+<h2>Students Quiz Result</h2><br />
+
+@using(@Html.BeginForm())
+{
+    <b>Name: </b>
+    @Html.TextBox("searchTerm", null, new { id = "txtSearch" })
+    <input type="submit" value="Search" />
+}﻿
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuizDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MarksObtained)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modeiItem => item.UserID)</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuizDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MarksObtained)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new {id = item.QuizID})
+        </td>
+    </tr>
+}
+
+</table>
+
+

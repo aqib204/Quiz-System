@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "MainPage";
+}
+
+<h2 align="center">Welcome To Online Quiz Application</h2>
+
+<style>
+    .btn-xl {
+        padding: 10px 20px;
+        font-size: 20px;
+        border-radius: 10px;
+    }
+</style>
+<br/><br /><br /><br />
+
+<p align="center">
+    @Html.ActionLink("Login as Student", "Index", "Student", null, new { @class = "btn btn-primary btn-xl" })
+    @Html.ActionLink("Login as Admin", "Index", "Admin", null, new { @class = "btn btn-primary btn-xl" })
+</p>
